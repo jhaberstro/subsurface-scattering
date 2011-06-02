@@ -35,9 +35,7 @@ GLuint thickness_program;
 GLuint sss_program;
 GLuint normal_program;
 GLuint scene_fbo;
-GLuint blur_fbo;
 GLuint scene_texture;
-GLuint blur_texture;
 GLuint quad_vbo;
 float obj_rotation = 45.0f;
 float light_rotation = 0.0f;
@@ -176,7 +174,7 @@ void draw() {
     glm::mat4 rot = glm::rotate(obj_rotation, 0.0f, 1.0f, 0.0f);
     rot = glm::rotate(rot, 270.0f, 2.0f, 0.0f, 0.0f);
     
-    // Draw depth into depth_texture
+    // Draw thicknss into scene_texture
     {
         glBindFramebuffer(GL_FRAMEBUFFER, scene_fbo);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -198,8 +196,8 @@ void draw() {
         //save_framebuffer("out.raw");
     }
     
+    // Second pass to perform sub-surface scattering 
     {
-        // Second pass to perform sub-surface scattering 
         glBindFramebuffer(GL_FRAMEBUFFER, 0); // 0 is the default buffer
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         //glClearColor(0.9f, 0.9f, 0.9f, 0.9f);
@@ -250,7 +248,7 @@ void draw() {
         glUniform1f(distortion_uniform, 0.2f);
         glUniform1f(scale_uniform, 15.0f);
         glUniform2f(screen_size_uniform, WINDOW_WIDTH, WINDOW_HEIGHT);
-        glUniform1f(light_radius_uniform, 1.0);
+        glUniform1f(light_radius_uniform, 1.0f);
         
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, scene_texture);
@@ -273,28 +271,7 @@ void PezRender() {
     draw();
 }
 
-void PezUpdate(unsigned int milliseconds) {
-#if 0    
-    light_rotation += 0.25f;
-    if (light_rotation > 360.0f) {
-        light_rotation = 0.0f;
-    }
-    
-    static bool light_dir_up = false;
-    if (light_dir_up == false) {
-        light_position -= light_translation;
-        if (light_position.y <= -1.2f) {
-            light_dir_up = true;
-        }
-    }
-    else {
-        light_position += light_translation;
-        if (light_position.y >= 0.7f) {
-            light_dir_up = false;
-        }
-    }
-#endif
-}
+void PezUpdate(unsigned int milliseconds) { }
 
 void PezHandleMouse(int x, int y, int action) {
     static int lastx = 0.0f;

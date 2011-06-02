@@ -4,3 +4,8 @@ Contact: jhaberstro@gmail.com
 This program demonstrates a real-time sub-surface scattering technique based on Colin Barré-Brisebois' GDC talk “Approximating Translucency for a Fast, Cheap and Convincing Subsurface Scattering Look.” The main difference between the two techniques is that the thickness map is computed in real-time, which extends the algorithm to deformable objects (or at least should - look out for a video down the road that should hopefully show this :-) ).
 
 A demonstration of this technique performed on the Stanford University Computer Graphics Laboratory's Happy Buddha model can be found here http://vimeo.com/24482528.
+
+To make my life easier I used some excellent libraries I'd like to acknowledge.
+	- For my math library I used GLM (http://glm.g-truc.net/) by Christophe Riccio.
+	- For model loading I used OpenCTM (http://openctm.sourceforge.net/) by Marcus Geelnard.
+	- For windowing I used PEZ (http://prideout.net/blog/?p=36) by Philip Rideout, with modifications by myself to support app docking and keyboard input on Mac OS X.
