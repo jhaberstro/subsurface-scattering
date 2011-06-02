@@ -1,0 +1,6 @@
+Author: Jedd Haberstro
+Contact: jhaberstro@gmail.com
+
+This program demonstrates a real-time sub-surface scattering technique based on Colin Barré-Brisebois' GDC talk “Approximating Translucency for a Fast, Cheap and Convincing Subsurface Scattering Look.” The main difference between the two techniques is that the thickness map is computed in real-time, which extends the algorithm to deformable objects (or at least should - look out for a video down the road that should hopefully show this :-) ).
+
+A demonstration of this technique performed on the Stanford University Computer Graphics Laboratory's Happy Buddha model can be found here http://vimeo.com/24482528.
