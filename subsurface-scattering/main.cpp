@@ -39,6 +39,7 @@ GLuint scene_texture;
 GLuint quad_vbo;
 float obj_rotation = 45.0f;
 float light_rotation = 0.0f;
+float obj_scale = 1.0f;
 mesh* dragon_mesh;
 mesh* buddha_mesh;
 mesh* sphere_mesh;
@@ -188,6 +189,7 @@ void draw() {
         int projection_uniform = glGetUniformLocation(thickness_program, "projection");
         
         glm::mat4 modelview = translation1 * rot;
+        modelview = glm::scale(modelview, glm::vec3(1.0f, obj_scale, 1.0f));
         glUniformMatrix4fv(modelview_uniform, 1, GL_FALSE, &modelview[0][0]);
         glUniformMatrix4fv(projection_uniform, 1, GL_FALSE, &perspective[0][0]);
         draw_mesh(buddha_mesh, ATTRIB_VERTEX, ATTRIB_NORMAL);
@@ -232,6 +234,7 @@ void draw() {
         int light_radius_uniform = glGetUniformLocation(sss_program, "light_radius");
         
         glm::mat4 modelview = translation1 * rot;
+        modelview = glm::scale(modelview, glm::vec3(1.0f, obj_scale, 1.0f));
         glUniformMatrix4fv(modelview_uniform, 1, GL_FALSE, &modelview[0][0]);
         glUniformMatrix4fv(projection_uniform, 1, GL_FALSE, &perspective[0][0]);
         glUniform4f(light_pos_uniform, transformed_light_pos.x, transformed_light_pos.y, transformed_light_pos.z, 1.0f); 
@@ -275,9 +278,12 @@ void PezUpdate(unsigned int milliseconds) { }
 
 void PezHandleMouse(int x, int y, int action) {
     static int lastx = 0.0f;
-    int delta = x - lastx;
-    obj_rotation += delta;
+    static int lasty = 0.0f;
+    int deltax = x - lastx;
+    int deltay = y - lasty;
+    obj_rotation += deltax;
     lastx = x;
+    lasty = y;
 }
 
 void PezHandleKeyDown(int key) {
@@ -293,6 +299,12 @@ void PezHandleKeyDown(int key) {
     }
     else if (key == KEY_RIGHTARROW) {
         light_position.x += kTranslation;
+    }
+    else if (key == KEY_W) {
+        obj_scale += 0.05f;
+    }
+    else if (key == KEY_S) {
+        obj_scale -= 0.05f;
     }
     
 }
